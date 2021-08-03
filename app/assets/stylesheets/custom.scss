@@ -15,12 +15,17 @@ textarea {
   resize: vertical;
 }
 
+table {
+ vertical-align: middle;
+ text-align: center;
+}
+
 .center {
   text-align: center;
 }
 
 .center h1 {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 /* typography */
@@ -52,7 +57,7 @@ p {
 
 /* header */
 
-#logo {
+.logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
@@ -63,7 +68,7 @@ p {
   font-weight: bold;
 }
 
-#logo:hover {
+.logo:hover {
   color: #fff;
   text-decoration: none;
 }
@@ -80,25 +85,57 @@ p {
   box-sizing:         border-box;
 }
 
-/* error_messages */
-
-#error_explanation {
-  color: red;
-  ul {
-    color: red;
-    margin: 0 0 30px 0;
-  }
+.btn-signup{
+  margin-top: 10px;
 }
 
-.field_with_errors {
+.error-explanation{
+  color: red;
+}
+
+.field_with_errors{
   @extend .has-error;
-  .form-control {
+  .form-control{
     color: $state-danger-text;
   }
 }
-/* モーダルウインドウの位置調整 */
+
+.btn-login{
+  margin-top: 20px;
+}
+
+.form-control{
+  margin-bottom: 10px;
+}
+
+.checkbox_login{
+  width: auto;
+  margin-left: 25px;
+  span{
+    font-weight: normal;
+  }
+}
 
 .modal-dialog-center {
   padding-top: 10%;
 }
 
+.change_month{
+  display: inline-block;
+}
+
+.sat{
+  color: blue;
+}
+
+.sun{
+  color: red;
+}
+
+.th-color{
+  color: red;
+}
+
+.name-search{
+  float: right;
+}
