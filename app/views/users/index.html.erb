@@ -1,24 +1,23 @@
-<% provide(:title, 'All Users') %>
+<% provide(:title, "ユーザー一覧") %>
 
-<% if params[:search].blank? %>
-  <h1>ユーザー一覧</h1>
-<% else %>
-  <h1>検索結果</h1>
-<% end %>
+<div class="container">
+  
+  
+<h1>
+  <%= params[:search].nil? ? "ユーザー一覧" : "検索結果" %>
+</h1>
 
-<div class="search">
-  <p>ユーザー名検索</p>
-    <%= form_tag @user, :method => 'get' do %>
-    <%= text_field_tag :search, params[:search], placeholder: "キーワードを入力" %>
-    <%= submit_tag "検索", :name => nil, class: "btn btn-md btn-primary" %>
-  </p>
-    <% end %>
+<div class="name-search">
+  <p>ユーザー検索</p>
+  <%= form_tag( users_path, method: :get) do %>
+    <%= text_field_tag :search %>
+    <%= submit_tag '検索', name: nil %>
+  <% end %>
 </div>
-
 
 <div class="col-md-10 col-md-offset-1">
   <%= will_paginate %>
-  <table class="table table-condensed table-hover" id="table-users">
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>
@@ -30,34 +29,36 @@
         <th></th>
       </tr>
     </thead>
-
-    <% @users.each do |user| %>
-      <tr>
-        <td>
-          <% if current_user.admin? %>
-            <%= link_to user.name, user %>
+    <tbody>
+      
+      
+      <% @users.each do |user| %>
+        <tr>
+          <% if current_user.admin %>
+            <td><%= link_to user.name, user %></td>
           <% else %>
-            <%= user.name %>
+            <td><%= user.name %></td>
           <% end %>
-        </td>
-        <td class="center"><%= user.department.present? ? user.department : "未所属" %></td>
-        <% if current_user.admin? %>
-          <td class="center"><%= format_basic_info(user.basic_time) %></td>
-          <td class="center"><%= format_basic_info(user.work_time) %></td>
-        <% end %>
-        <td class="center">
-          <% if current_user.admin? && !current_user?(user) %>
-            <%= link_to "基本情報編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success" %>
-            <%= link_to "削除", user, method: :delete,
-            data: { confirm: "削除してよろしいですか？" },
-            class: "btn btn-danger" %>
+          
+          <td class="center"><%= user.department.present? ? user.department : "未設定" %></td>
+          
+          <% if current_user.admin? %>
+            <td class="center"><%= format_basic_info(user.work_time) %></td>
+            <td class="center"><%= format_basic_info(user.basic_time) %></td>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
+          
+          <td class="center">
+            <% if current_user.admin? && !current_user?(user) %>
+              <%= link_to "基本情報編集", edit_basic_info_user_path(user), class: "btn btn-success" %>
+              <%= link_to "削除", user, method: :delete, data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
+            <% end %>
+          </td>
+          
+        </tr>
+      <% end %>
+    </tbody>
   </table>
   <%= will_paginate %>
 </div>
 
-<!--モーダルウインドウ表示-->
-<div id="edit-basic-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+</div>
